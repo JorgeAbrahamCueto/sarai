@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morro Azul - Del mar a la mesa</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo" onclick="showSection('home-view')">⚓ Morro Azul</div>
+        <ul class="nav-links">
+            <li><a href="#" onclick="showSection('home-view')">Inicio</a></li>
+            <li><a href="#" onclick="scrollToServices()">Servicios</a></li>
+            <li id="auth-status">
+                <button class="btn-login" onclick="showSection('login-section')">Iniciar Sesión</button>
+            </li>
+        </ul>
+    </nav>
+
+    <main id="main-content">
+        
+        <div id="home-view">
+            <header class="hero">
+                <div class="hero-content">
+                    <span class="badge">La red logística del mar</span>
+                    <h1>Del mar a la mesa, <br> <span>sin intermediarios.</span></h1>
+                    <p>Morro Azul conecta directamente a los pescadores con los mejores restaurantes, garantizando frescura y logística eficiente.</p>
+                    <button class="btn-primary" onclick="showSection('register-section')">Comenzar Ahora →</button>
+                </div>
+            </header>
+
+            <section id="features-section" class="features">
+                <h2 class="section-title">Una plataforma diseñada para potenciar tu negocio</h2>
+                <div class="container">
+                    <div class="card">
+                        <div class="icon-box">⛵</div>
+                        <h3>Para Pescadores</h3>
+                        <p>Registra tus capturas diarias, establece tus precios y recibe pedidos directamente de restaurantes interesados en tu producto.</p>
+                    </div>
+                    <div class="card">
+                        <div class="icon-box">🏪</div>
+                        <h3>Para Restaurantes</h3>
+                        <p>Accede a un mercado de pescado fresco en tiempo real. Compra exactamente lo que necesitas, directamente de la fuente.</p>
+                    </div>
+                    <div class="card">
+                        <div class="icon-box">📈</div>
+                        <h3>Gestión Eficiente</h3>
+                        <p>Seguimiento completo de pedidos, desde que se confirman hasta que llegan a su destino. Control total de tu inventario.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <section id="login-section" class="form-container hidden">
+            <div class="form-card">
+                <h2>Iniciar Sesión</h2>
+                <form id="login-form">
+                    <input type="email" id="login-email" placeholder="Correo electrónico" required>
+                    <input type="password" id="login-pass" placeholder="Contraseña" required>
+                    <button type="submit" class="btn-submit">Entrar</button>
+                </form>
+                <p>¿No tienes cuenta? <a href="#" onclick="showSection('register-section')">Regístrate aquí</a></p>
+            </div>
+        </section>
+
+        <section id="register-section" class="form-container hidden">
+            <div class="form-card">
+                <h2>Crear Cuenta</h2>
+                <form id="register-form">
+                    <input type="text" id="reg-name" placeholder="Nombre completo" required>
+                    <input type="email" id="reg-email" placeholder="Correo electrónico" required>
+                    <input type="password" id="reg-pass" placeholder="Contraseña" required>
+                    <select id="reg-role" required>
+                        <option value="">Soy un...</option>
+                        <option value="pescador">Pescador</option>
+                        <option value="restaurante">Restaurante</option>
+                    </select>
+                    <button type="submit" class="btn-submit">Registrarse</button>
+                </form>
+                <p>¿Ya tienes cuenta? <a href="#" onclick="showSection('login-section')">Inicia sesión</a></p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">⚓ Morro Azul</div>
+            <div class="footer-copy">© 2026 Morro Azul Logística. Todos los derechos reservados.</div>
+        </div>
+    </footer>
+
+</body>
+</html>

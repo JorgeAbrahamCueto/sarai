@@ -1,6 +1,17 @@
 // Variable global para el carrito
 let cart = JSON.parse(localStorage.getItem('morroCart')) || [];
 
+// =========================================
+// NUEVO: Funciones Menú Hamburguesa (Móvil)
+// =========================================
+function toggleMenu() {
+    document.getElementById('nav-links').classList.toggle('active');
+}
+
+function closeMenu() {
+    document.getElementById('nav-links').classList.remove('active');
+}
+
 // 1. Navegación entre secciones
 function showSection(sectionId) {
     const views = ['home-view', 'login-section', 'register-section', 'pescadores-view', 'restaurantes-view', 'cart-view', 'checkout-view'];
@@ -315,21 +326,20 @@ document.getElementById('login-form').addEventListener('submit', (e) => {
     }
 });
 
-// ACTUALIZADO: Ocultar botón "Comenzar Ahora" al estar logueado
 function updateNavbar(name) {
     const authContainer = document.getElementById('auth-status');
+    // AÑADIDO: closeMenu() al dar clic en carrito o cerrar sesión
     authContainer.innerHTML = `
         <div class="user-menu">
-            <button class="btn-cart" onclick="showSection('cart-view')" title="Ver Carrito">
+            <button class="btn-cart" onclick="showSection('cart-view'); closeMenu();" title="Ver Carrito">
                 🛒 <span id="cart-count" class="cart-badge">0</span>
             </button>
             <span class="user-greeting">Hola, <strong>${name}</strong></span>
-            <button class="btn-logout" onclick="logout()">Cerrar Sesión</button>
+            <button class="btn-logout" onclick="logout(); closeMenu();">Cerrar Sesión</button>
         </div>
     `;
     updateCartBadge(); 
 
-    // Ocultamos el botón del centro de la pantalla
     const ctaBtn = document.getElementById('hero-cta-btn');
     if (ctaBtn) {
         ctaBtn.classList.add('hidden');
@@ -341,7 +351,7 @@ function logout() {
     localStorage.removeItem('userRole'); 
     localStorage.removeItem('morroCart'); 
     localStorage.removeItem('currentCatalog'); 
-    location.reload(); // Al recargar la página limpia todo y el botón vuelve a aparecer
+    location.reload(); 
 }
 
 window.addEventListener('load', () => {

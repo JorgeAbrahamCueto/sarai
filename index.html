@@ -12,15 +12,22 @@
 <body>
 
     <nav class="navbar">
-        <div class="logo" onclick="showSection('home-view')">
+        <div class="logo" onclick="showSection('home-view'); closeMenu();">
             <img src="/img/Icono-MORRO-SUR.png" alt="Logo Morro Sur" class="logo-img">
             <span>Morro Sur</span>
         </div>
-        <ul class="nav-links">
-            <li><a href="#" onclick="showSection('home-view')">Inicio</a></li>
-            <li><a href="#" onclick="scrollToServices()">Servicios</a></li>
+        
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
+        <ul class="nav-links" id="nav-links">
+            <li><a href="#" onclick="showSection('home-view'); closeMenu();">Inicio</a></li>
+            <li><a href="#" onclick="scrollToServices(); closeMenu();">Servicios</a></li>
             <li id="auth-status">
-                <button class="btn-login" onclick="showSection('login-section')">Iniciar Sesión</button>
+                <button class="btn-login" onclick="showSection('login-section'); closeMenu();">Iniciar Sesión</button>
             </li>
         </ul>
     </nav>
@@ -66,7 +73,6 @@
         <section id="pescadores-view" class="catalog-section hidden">
             <h2 class="section-title">Mis Capturas Publicadas</h2>
             <div class="catalog-grid">
-                
                 <div class="product-card">
                     <img id="img-lenguado" src="/img/lenguado.jpg" alt="Lenguado" class="product-img">
                     <span class="product-tag">Fresco de Hoy</span>
@@ -96,7 +102,6 @@
                     </div>
                     <button class="btn-submit" style="margin-top:15px;" onclick="addToCart('Pulpo', 35.00, 'qty-pulpo', '/img/pulpo.jpg')">Añadir al Carrito</button>
                 </div>
-                
             </div>
         </section>
 
@@ -116,7 +121,6 @@
                         <input type="number" id="qty-atun" min="1" max="20" value="1">
                         <span>kg</span>
                     </div>
-
                     <button class="btn-submit" style="margin-top:15px;" onclick="addToCart('Atún de Aleta Amarilla', 55.00, 'qty-atun', '/img/atunalaaamrilla.jpg')">Añadir al Carrito</button>
                 </div>
 
@@ -132,7 +136,6 @@
                         <input type="number" id="qty-conchas" min="1" max="50" value="1">
                         <span>docenas</span>
                     </div>
-
                     <button class="btn-submit" style="margin-top:15px;" onclick="addToCart('Conchas de Abanico', 25.00, 'qty-conchas', '/img/conchasabanico.jpg')">Añadir al Carrito</button>
                 </div>
 
@@ -148,7 +151,6 @@
                         <input type="number" id="qty-corvina" min="1" max="12" value="1">
                         <span>kg</span>
                     </div>
-
                     <button class="btn-submit" style="margin-top:15px;" onclick="addToCart('Corvina', 40.00, 'qty-corvina', '/img/corvina.jpg')">Añadir al Carrito</button>
                 </div>
 

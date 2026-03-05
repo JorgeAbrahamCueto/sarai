@@ -1,15 +1,11 @@
-// =========================================
 // 1. VARIABLES GLOBALES Y PERSISTENCIA
-// =========================================
 let cart = JSON.parse(localStorage.getItem('morroCart')) || [];
 let localProducts = JSON.parse(localStorage.getItem('morroProducts')) || [
     { id: 1, name: "Lenguado Entero", price: 45.0, desc: "Capturado esta madrugada.", stock: 15, img: "https://images.unsplash.com/photo-1534940859016-d5478443d088?q=80&w=400", owner: "Admin" },
     { id: 2, name: "Pulpo Fresco", price: 35.0, desc: "Limpiado y listo.", stock: 8, img: "https://images.unsplash.com/photo-1559740049-93e18f2601c4?q=80&w=400", owner: "Admin" }
 ];
 
-// =========================================
 // 2. NAVEGACIÓN Y CONTROL DE INTERFAZ
-// =========================================
 function toggleMenu() { document.getElementById('nav-links').classList.toggle('active'); }
 function closeMenu() { document.getElementById('nav-links').classList.remove('active'); }
 
@@ -29,14 +25,14 @@ function scrollToServices() {
 }
 
 function showSection(sectionId) {
-    // Añadida 'checkout-view' a la lista
     const views = ['home-view', 'login-section', 'register-section', 'pescadores-view', 'restaurantes-view', 'cart-view', 'checkout-view'];
     views.forEach(id => {
         const el = document.getElementById(id);
         if(el) el.classList.add('hidden');
     });
     
-    document.getElementById(sectionId).classList.remove('hidden');
+    const target = document.getElementById(sectionId);
+    if(target) target.classList.remove('hidden');
     window.scrollTo(0, 0);
 
     if (sectionId === 'pescadores-view') renderPescadorInventory();
@@ -44,11 +40,8 @@ function showSection(sectionId) {
     if (sectionId === 'cart-view') renderCart();
 }
 
-// =========================================
 // 3. GESTIÓN DE PRODUCTOS (PESCADOR)
-// =========================================
 const productForm = document.getElementById('product-form');
-
 if (productForm) {
     productForm.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -73,7 +66,6 @@ if (productForm) {
             localStorage.setItem('morroProducts', JSON.stringify(localProducts));
             resetForm();
             renderPescadorInventory();
-            renderRestauranteMarket();
         };
 
         if (file) {
@@ -96,7 +88,7 @@ function renderPescadorInventory() {
                 <div class="price">S/ ${prod.price.toFixed(2)}</div>
                 <p>Stock: ${prod.stock}kg</p>
                 <div style="display:flex; gap:5px; margin-top:10px;">
-                    <button onclick="editProduct(${index})" class="btn-submit" style="background:#f59e0b;">Editar</button>
+                    <button onclick="editProduct(${index})" class="btn-submit" style="background:#f59e0b; padding: 5px;">Editar</button>
                     <button onclick="deleteProduct(${index})" class="btn-remove" style="flex:1;">Eliminar</button>
                 </div>
             </div>`;
@@ -128,17 +120,14 @@ function deleteProduct(index) {
         localProducts.splice(index, 1);
         localStorage.setItem('morroProducts', JSON.stringify(localProducts));
         renderPescadorInventory();
-        renderRestauranteMarket();
     }
 }
 
-// =========================================
 // 4. MERCADO Y CARRITO (RESTAURANTE)
-// =========================================
 function renderRestauranteMarket() {
     const grid = document.getElementById('restaurante-market-grid');
     if(!grid) return;
-    grid.innerHTML = localProducts.length === 0 ? "<p>No hay productos.</p>" : '';
+    grid.innerHTML = localProducts.length === 0 ? "<p>No hay productos disponibles.</p>" : '';
     localProducts.forEach(prod => {
         grid.innerHTML += `
             <div class="product-card">
@@ -166,16 +155,11 @@ function addToCart(name, price, inputId, img) {
     alert("🛒 Agregado al carrito");
 }
 
-function updateCartBadge() {
-    const badge = document.getElementById('cart-count');
-    if (badge) badge.innerText = cart.reduce((acc, item) => acc + item.quantity, 0);
-}
-
 function renderCart() {
     const container = document.getElementById('cart-items');
     const totalEl = document.getElementById('cart-total');
     if(!container) return;
-    container.innerHTML = cart.length === 0 ? '<p>Vacío</p>' : '';
+    container.innerHTML = cart.length === 0 ? '<p>Tu carrito está vacío.</p>' : '';
     let total = 0;
     cart.forEach((item, index) => {
         const subtotal = item.price * item.quantity;
@@ -197,17 +181,20 @@ function removeFromCart(index) {
     updateCartBadge();
 }
 
-// =========================================
-// 5. PASARELA DE PAGO (RESTABLECIDA)
-// =========================================
+function updateCartBadge() {
+    const badge = document.getElementById('cart-count');
+    if (badge) badge.innerText = cart.reduce((acc, item) => acc + item.quantity, 0);
+}
+
+// 5. PASARELA DE PAGO
 function processPayment() {
     if (cart.length === 0) {
         alert("El carrito está vacío.");
         return;
     }
-    alert("💳 Procesando pago...");
+    alert("💳 Procesando pago seguro...");
     setTimeout(() => {
-        alert("✅ ¡Pago exitoso! El pescador ha recibido tu pedido y el transporte está en camino.");
+        alert("✅ ¡Pago exitoso! El pedido ha sido enviado al pescador.");
         cart = [];
         localStorage.removeItem('morroCart');
         updateCartBadge();
@@ -215,14 +202,12 @@ function processPayment() {
     }, 1500);
 }
 
-// =========================================
-// 6. AUTENTICACIÓN Y SESIÓN
-// =========================================
+// 6. AUTENTICACIÓN
 function checkAuth(viewId) {
     const role = localStorage.getItem('userRole');
     if (!role) { showSection('login-section'); return; }
-    if (viewId === 'pescadores-view' && role !== 'pescador') { alert("Acceso solo pescadores"); return; }
-    if (viewId === 'restaurantes-view' && role !== 'restaurante') { alert("Acceso solo restaurantes"); return; }
+    if (viewId === 'pescadores-view' && role !== 'pescador') { alert("Acceso solo para pescadores"); return; }
+    if (viewId === 'restaurantes-view' && role !== 'restaurante') { alert("Acceso solo para restaurantes"); return; }
     showSection(viewId);
 }
 
@@ -232,7 +217,7 @@ document.getElementById('register-form').addEventListener('submit', (e) => {
     const name = (role === 'pescador') ? document.getElementById('reg-name-pescador').value : document.getElementById('reg-name-restaurante').value;
     localStorage.setItem('userFirstName', name);
     localStorage.setItem('userRole', role);
-    alert("Registro exitoso");
+    alert("Registro exitoso. Ahora puedes iniciar sesión.");
     showSection('login-section');
 });
 
@@ -240,6 +225,7 @@ document.getElementById('login-form').addEventListener('submit', (e) => {
     e.preventDefault();
     const name = localStorage.getItem('userFirstName');
     if (name) { updateNavbar(name); showSection('home-view'); }
+    else { alert("Usuario no encontrado. Regístrate primero."); }
 });
 
 function updateNavbar(name) {
@@ -256,7 +242,8 @@ function updateNavbar(name) {
 }
 
 function logout() {
-    localStorage.clear();
+    localStorage.removeItem('userFirstName');
+    localStorage.removeItem('userRole');
     location.reload();
 }
 

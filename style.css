@@ -507,3 +507,35 @@ body {
         text-align: center;
     }
 }
+/* Estilos adicionales para el CRUD */
+textarea {
+    resize: none;
+    font-family: inherit;
+    margin-bottom: 15px;
+}
+
+input[type="file"] {
+    border: 1px dashed #cbd5e1;
+    background: #fff;
+    cursor: pointer;
+}
+
+.product-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.btn-remove {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.btn-remove:hover { background: #dc2626; }

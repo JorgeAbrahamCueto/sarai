@@ -1,263 +1,264 @@
 <!DOCTYPE html>
 <html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Morro Sur - Del mar a la mesa</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
     <script src="script.js" defer></script>
-</head>
-
-<body>
-
+  </head>
+  <body>
     <nav class="navbar">
-        <div class="logo" onclick="showSection('home-view'); closeMenu();">
-            <img src="/img/Icono-MORRO-SUR.png" alt="Logo Morro Sur" class="logo-img">
-            <span>Morro Sur</span>
-        </div>
-        
-        <div class="menu-toggle" onclick="toggleMenu()">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </div>
+      <div class="logo" onclick="showSection('home-view'); closeMenu();">
+        <img
+          src="/img/Icono-MORRO-SUR.png"
+          alt="Logo Morro Sur"
+          class="logo-img"
+        />
+        <span>Morro Sur</span>
+      </div>
 
-        <ul class="nav-links" id="nav-links">
-            <li><a href="#" onclick="showSection('home-view'); closeMenu();">Inicio</a></li>
-            <li><a href="#" onclick="scrollToServices(); closeMenu();">Servicios</a></li>
-            <li id="auth-status">
-                <button class="btn-login" onclick="showSection('login-section'); closeMenu();">Iniciar Sesión</button>
-            </li>
-        </ul>
+      <div class="menu-toggle" onclick="toggleMenu()">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+
+      <ul class="nav-links" id="nav-links">
+        <li>
+          <a href="#" onclick="showSection('home-view'); closeMenu();"
+            >Inicio</a
+          >
+        </li>
+        <li>
+          <a href="#" onclick="scrollToServices(); closeMenu();">Servicios</a>
+        </li>
+        <li id="auth-status">
+          <button
+            class="btn-login"
+            onclick="showSection('login-section'); closeMenu();"
+          >
+            Iniciar Sesión
+          </button>
+        </li>
+      </ul>
     </nav>
 
     <main id="main-content">
+      <div id="home-view">
+        <header class="hero">
+          <div class="hero-content">
+            <span class="badge">La red logística del mar</span>
+            <h1>
+              Del mar a la mesa, <br />
+              <span>sin intermediarios.</span>
+            </h1>
+            <p>
+              Morro Sur conecta directamente a los pescadores locales con los
+              mejores restaurantes.
+            </p>
+            <button
+              id="hero-cta-btn"
+              class="btn-primary"
+              onclick="showSection('register-section')"
+            >
+              Comenzar Ahora →
+            </button>
+          </div>
+        </header>
 
-        <div id="home-view">
-            <header class="hero">
-                <div class="hero-content">
-                    <span class="badge">La red logística del mar</span>
-                    <h1>Del mar a la mesa, <br> <span>sin intermediarios.</span></h1>
-                    <p>Morro Sur conecta directamente a los pescadores con los mejores restaurantes, garantizando
-                        frescura y logística eficiente.</p>
-                    <button id="hero-cta-btn" class="btn-primary" onclick="showSection('register-section')">Comenzar Ahora →</button>
-                </div>
-            </header>
+        <section id="features-section" class="features">
+          <h2 class="section-title">Nuestros Servicios</h2>
+          <div class="container">
+            <div
+              class="card cursor-pointer"
+              onclick="checkAuth('pescadores-view')"
+            >
+              <div class="icon-box">⛵</div>
+              <h3>Para Pescadores</h3>
+              <p>
+                Sube tus capturas, gestiona tu inventario y vende directamente.
+              </p>
+            </div>
+            <div
+              class="card cursor-pointer"
+              onclick="checkAuth('restaurantes-view')"
+            >
+              <div class="icon-box">🏪</div>
+              <h3>Para Restaurantes</h3>
+              <p>
+                Compra pescado fresco en tiempo real directamente de la fuente.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
 
-            <section id="features-section" class="features">
-                <h2 class="section-title">Una plataforma diseñada para potenciar tu negocio</h2>
-                <div class="container">
-                    <div class="card cursor-pointer" onclick="checkAuth('pescadores-view')">
-                        <div class="icon-box">⛵</div>
-                        <h3>Para Pescadores</h3>
-                        <p>Registra tus capturas diarias, establece tus precios y recibe pedidos directamente de
-                            restaurantes interesados en tu producto.</p>
-                    </div>
-                    <div class="card cursor-pointer" onclick="checkAuth('restaurantes-view')">
-                        <div class="icon-box">🏪</div>
-                        <h3>Para Restaurantes</h3>
-                        <p>Accede a un mercado de pescado fresco en tiempo real. Compra exactamente lo que necesitas,
-                            directamente de la fuente.</p>
-                    </div>
-                    <div class="card">
-                        <div class="icon-box">📈</div>
-                        <h3>Gestión Eficiente</h3>
-                        <p>Seguimiento completo de pedidos, desde que se confirman hasta que llegan a su destino.
-                            Control total de tu inventario.</p>
-                    </div>
+      <section id="pescadores-view" class="catalog-section hidden">
+        <div class="container">
+          <h2 class="section-title">Panel de Control: Mis Capturas</h2>
+          <div
+            class="form-card"
+            style="
+              max-width: 600px;
+              margin: 0 auto 40px auto;
+              background: #f8fafc;
+              text-align: left;
+            "
+          >
+            <h3 id="form-title">🚢 Registrar Nueva Captura</h3>
+            <form id="product-form" style="margin-top: 15px">
+              <input type="hidden" id="edit-index" value="-1" />
+              <label class="checkout-label">Especie / Producto</label>
+              <input
+                type="text"
+                id="p-name"
+                placeholder="Ej. Bonito, Merluza"
+                required
+              />
+
+              <div style="display: flex; gap: 10px">
+                <div style="flex: 1">
+                  <label class="checkout-label">Precio (S/ kg)</label>
+                  <input type="number" id="p-price" step="0.10" required />
                 </div>
-            </section>
+                <div style="flex: 1">
+                  <label class="checkout-label">Stock (kg)</label>
+                  <input type="number" id="p-stock" required />
+                </div>
+              </div>
+
+              <label class="checkout-label">Foto de la Captura</label>
+              <input type="file" id="p-image" accept="image/*" />
+
+              <label class="checkout-label">Descripción</label>
+              <textarea
+                id="p-desc"
+                rows="2"
+                style="
+                  width: 100%;
+                  padding: 10px;
+                  border-radius: 10px;
+                  border: 1px solid #e2e8f0;
+                "
+              ></textarea>
+
+              <button
+                type="submit"
+                id="btn-publish"
+                class="btn-submit"
+                style="margin-top: 15px"
+              >
+                Publicar Producto
+              </button>
+              <button
+                type="button"
+                id="btn-cancel-edit"
+                class="hidden"
+                onclick="resetForm()"
+                style="
+                  background: #64748b;
+                  margin-top: 5px;
+                  width: 100%;
+                  padding: 10px;
+                  border-radius: 10px;
+                  color: white;
+                  border: none;
+                  cursor: pointer;
+                "
+              >
+                Cancelar Edición
+              </button>
+            </form>
+          </div>
+          <h3>Mi Inventario Actual</h3>
+          <div id="pescador-inventory-grid" class="catalog-grid"></div>
         </div>
+      </section>
 
-        <section id="pescadores-view" class="catalog-section hidden">
-            <h2 class="section-title">Mis Capturas Publicadas</h2>
-            <div class="catalog-grid">
-                <div class="product-card">
-                    <img id="img-lenguado" src="/img/lenguado.jpg" alt="Lenguado" class="product-img">
-                    <span class="product-tag">Fresco de Hoy</span>
-                    <h3>Lenguado Entero</h3>
-                    <p>Capturado esta madrugada. Ideal para ceviche o tiradito.</p>
-                    <div class="price">S/ 45.00 <span>x kg</span></div>
-                    
-                    <div class="quantity-control">
-                        <label for="qty-lenguado">Cantidad:</label>
-                        <input type="number" id="qty-lenguado" min="1" max="15" value="1">
-                        <span>kg</span>
-                    </div>
-                    <button class="btn-submit" style="margin-top:15px;" onclick="addToCart('Lenguado Entero', 45.00, 'qty-lenguado', '/img/lenguado.jpg')">Añadir al Carrito</button>
-                </div>
-                
-                <div class="product-card">
-                    <img id="img-pulpo" src="/img/pulpo.jpg" alt="Pulpo" class="product-img">
-                    <span class="product-tag">Mariscos</span>
-                    <h3>Pulpo</h3>
-                    <p>Limpiado y listo para cocción. Excelente textura.</p>
-                    <div class="price">S/ 35.00 <span>x kg</span></div>
-                    
-                    <div class="quantity-control">
-                        <label for="qty-pulpo">Cantidad:</label>
-                        <input type="number" id="qty-pulpo" min="1" max="8" value="1">
-                        <span>kg</span>
-                    </div>
-                    <button class="btn-submit" style="margin-top:15px;" onclick="addToCart('Pulpo', 35.00, 'qty-pulpo', '/img/pulpo.jpg')">Añadir al Carrito</button>
-                </div>
+      <section id="restaurantes-view" class="catalog-section hidden">
+        <h2 class="section-title">Mercado Fresco en Tiempo Real</h2>
+        <div id="restaurante-market-grid" class="catalog-grid"></div>
+      </section>
+
+      <section id="cart-view" class="catalog-section hidden">
+        <h2 class="section-title">Tu Carrito de Compras</h2>
+        <div class="cart-container">
+          <div id="cart-items"></div>
+          <div class="cart-summary">
+            <h3>Total: <span id="cart-total">S/ 0.00</span></h3>
+            <button class="btn-primary" onclick="showSection('checkout-view')">
+              Proceder al Pago
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section id="login-section" class="form-container hidden">
+        <div class="form-card">
+          <h2>Iniciar Sesión</h2>
+          <form id="login-form">
+            <input
+              type="email"
+              id="login-email"
+              placeholder="Correo"
+              required
+            />
+            <input
+              type="password"
+              id="login-pass"
+              placeholder="Contraseña"
+              required
+            />
+            <button type="submit" class="btn-submit">Entrar</button>
+          </form>
+          <p>
+            ¿No tienes cuenta?
+            <a href="#" onclick="showSection('register-section')">Regístrate</a>
+          </p>
+        </div>
+      </section>
+
+      <section id="register-section" class="form-container hidden">
+        <div class="form-card">
+          <h2>Crear Cuenta</h2>
+          <form id="register-form">
+            <select id="reg-role" required onchange="toggleRegFields()">
+              <option value="">¿Quién eres?</option>
+              <option value="pescador">Soy Pescador</option>
+              <option value="restaurante">Soy Restaurante</option>
+            </select>
+            <input type="email" id="reg-email" placeholder="Correo" required />
+            <input
+              type="password"
+              id="reg-pass"
+              placeholder="Contraseña"
+              required
+            />
+            <div id="fields-pescador" class="hidden">
+              <input
+                type="text"
+                id="reg-name-pescador"
+                placeholder="Nombre Completo"
+              />
             </div>
-        </section>
-
-        <section id="restaurantes-view" class="catalog-section hidden">
-            <h2 class="section-title">Mercado Fresco (Mayorista)</h2>
-            <div class="catalog-grid">
-                
-                <div class="product-card">
-                    <img id="img-atun" src="/img/atunalaaamrilla.jpg" alt="Atún Fresco" class="product-img">
-                    <span class="product-tag">Pescador: Juan P.</span>
-                    <h3>Atún de Aleta Amarilla</h3>
-                    <p>Lomo de atún fresco. Calidad premium para sashimi o sellado.</p>
-                    <div class="price">S/ 55.00 <span>x kg</span></div>
-                    
-                    <div class="quantity-control">
-                        <label for="qty-atun">Cantidad:</label>
-                        <input type="number" id="qty-atun" min="1" max="20" value="1">
-                        <span>kg</span>
-                    </div>
-                    <button class="btn-submit" style="margin-top:15px;" onclick="addToCart('Atún de Aleta Amarilla', 55.00, 'qty-atun', '/img/atunalaaamrilla.jpg')">Añadir al Carrito</button>
-                </div>
-
-                <div class="product-card">
-                    <img id="img-conchas" src="/img/conchasabanico.jpg" alt="Conchas de Abanico" class="product-img">
-                    <span class="product-tag">Pescador: Carlos T.</span>
-                    <h3>Conchas de Abanico</h3>
-                    <p>Frescas, en su valva. Tamaño grande, ideales para la parrilla.</p>
-                    <div class="price">S/ 25.00 <span>x docena</span></div>
-
-                    <div class="quantity-control">
-                        <label for="qty-conchas">Cantidad:</label>
-                        <input type="number" id="qty-conchas" min="1" max="50" value="1">
-                        <span>docenas</span>
-                    </div>
-                    <button class="btn-submit" style="margin-top:15px;" onclick="addToCart('Conchas de Abanico', 25.00, 'qty-conchas', '/img/conchasabanico.jpg')">Añadir al Carrito</button>
-                </div>
-
-                <div class="product-card">
-                    <img id="img-corvina" src="/img/corvina.jpg" alt="Corvina" class="product-img">
-                    <span class="product-tag">Pescador: Miguel R.</span>
-                    <h3>Corvina</h3>
-                    <p>Pesca artesanal del día. Pescado blanco de excelente sabor.</p>
-                    <div class="price">S/ 40.00 <span>x kg</span></div>
-
-                    <div class="quantity-control">
-                        <label for="qty-corvina">Cantidad:</label>
-                        <input type="number" id="qty-corvina" min="1" max="12" value="1">
-                        <span>kg</span>
-                    </div>
-                    <button class="btn-submit" style="margin-top:15px;" onclick="addToCart('Corvina', 40.00, 'qty-corvina', '/img/corvina.jpg')">Añadir al Carrito</button>
-                </div>
-
+            <div id="fields-restaurante" class="hidden">
+              <input
+                type="text"
+                id="reg-name-restaurante"
+                placeholder="Nombre del Restaurante"
+              />
             </div>
-        </section>
-
-        <section id="cart-view" class="catalog-section hidden">
-            <h2 class="section-title">Tu Carrito de Compras</h2>
-            <div class="cart-container">
-                <div id="cart-items"></div>
-                <div class="cart-summary">
-                    <h3>Total a Pagar: <span id="cart-total">S/ 0.00</span></h3>
-                    <button class="btn-primary" onclick="proceedToCheckout()">Proceder al Pago</button>
-                </div>
-            </div>
-        </section>
-
-        <section id="checkout-view" class="form-container hidden">
-            <div class="form-card" style="max-width: 550px;">
-                <h2>Detalles de Envío y Pago</h2>
-                <form id="checkout-form">
-                    
-                    <div id="dynamic-shipping-fields" style="text-align: left; margin-bottom: 20px;"></div>
-
-                    <h3 style="margin-top: 25px; margin-bottom: 15px; text-align: left; color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 5px;">Pasarela de Pago Segura</h3>
-                    
-                    <div style="background: #f8fafc; padding: 20px; border-radius: 10px; border: 1px solid #cbd5e1; text-align: left; margin-bottom: 20px;">
-                        <label class="checkout-label">Titular de la Tarjeta</label>
-                        <input type="text" id="cc-name" placeholder="Ej. Juan Pérez" required>
-
-                        <label class="checkout-label">Número de Tarjeta</label>
-                        <input type="text" id="cc-number" placeholder="0000 0000 0000 0000" maxlength="19" required>
-
-                        <div style="display: flex; gap: 15px;">
-                            <div style="flex: 1;">
-                                <label class="checkout-label">Vencimiento</label>
-                                <input type="text" id="cc-exp" placeholder="MM/AA" maxlength="5" required>
-                            </div>
-                            <div style="flex: 1;">
-                                <label class="checkout-label">CVV</label>
-                                <input type="password" id="cc-cvv" placeholder="123" maxlength="4" required>
-                            </div>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn-submit" id="btn-pay-total">Confirmar y Pagar</button>
-                    <button type="button" class="btn-logout" style="width: 100%; margin-top: 15px;" onclick="showSection('cart-view')">← Volver al Carrito</button>
-                </form>
-            </div>
-        </section>
-
-        <section id="login-section" class="form-container hidden">
-            <div class="form-card">
-                <h2>Iniciar Sesión</h2>
-                <form id="login-form">
-                    <input type="email" id="login-email" placeholder="Correo electrónico" required>
-                    <input type="password" id="login-pass" placeholder="Contraseña" required>
-                    <button type="submit" class="btn-submit">Entrar</button>
-                </form>
-                <p>¿No tienes cuenta? <a href="#" onclick="showSection('register-section')">Regístrate aquí</a></p>
-            </div>
-        </section>
-
-        <section id="register-section" class="form-container hidden">
-            <div class="form-card">
-                <h2>Crear Cuenta</h2>
-                <form id="register-form">
-                    <select id="reg-role" required onchange="toggleRegFields()" style="margin-bottom: 25px; font-weight: bold;">
-                        <option value="">¿Qué tipo de cuenta deseas crear?</option>
-                        <option value="pescador">Soy Pescador</option>
-                        <option value="restaurante">Soy Restaurante</option>
-                    </select>
-                    
-                    <input type="email" id="reg-email" placeholder="Correo electrónico" required>
-                    <input type="password" id="reg-pass" placeholder="Contraseña" required>
-
-                    <div id="fields-pescador" class="hidden text-left">
-                        <label class="checkout-label">Datos del Pescador</label>
-                        <input type="text" id="reg-name-pescador" placeholder="Nombre completo">
-                        <input type="text" id="reg-dni" placeholder="DNI (8 dígitos)" maxlength="8" pattern="\d{8}">
-                        <input type="tel" id="reg-phone-pescador" placeholder="Celular de contacto">
-                    </div>
-
-                    <div id="fields-restaurante" class="hidden text-left">
-                        <label class="checkout-label">Datos del Restaurante</label>
-                        <input type="text" id="reg-name-restaurante" placeholder="Nombre Comercial (Restaurante)">
-                        <input type="text" id="reg-ruc" placeholder="RUC (11 dígitos)" maxlength="11" pattern="\d{11}">
-                        <input type="tel" id="reg-phone-restaurante" placeholder="Teléfono del local">
-                    </div>
-
-                    <button type="submit" class="btn-submit" style="margin-top: 15px;">Registrarse</button>
-                </form>
-                <p>¿Ya tienes cuenta? <a href="#" onclick="showSection('login-section')">Inicia sesión</a></p>
-            </div>
-        </section>
-
+            <button type="submit" class="btn-submit">Registrarse</button>
+          </form>
+        </div>
+      </section>
     </main>
 
     <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-logo">
-                <img src="/img/Icono-MORRO-SUR.png" alt="Logo Morro Sur" class="logo-img-footer">
-                <span>Morro Sur</span>
-            </div>
-            <div class="footer-copy">© 2026 Morro Sur Logística. Todos los derechos reservados.</div>
-        </div>
+      <div class="footer-content">
+        <span>© 2026 Morro Sur Logística.</span>
+      </div>
     </footer>
-
-</body>
+  </body>
 </html>

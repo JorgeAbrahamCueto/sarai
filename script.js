@@ -13,7 +13,6 @@ let localProducts = JSON.parse(localStorage.getItem('morroProducts')) || [
 function toggleMenu() { document.getElementById('nav-links').classList.toggle('active'); }
 function closeMenu() { document.getElementById('nav-links').classList.remove('active'); }
 
-// Control de visibilidad del botón "Comenzar Ahora"
 function toggleHeroButton(isLoggedIn) {
     const heroBtn = document.getElementById('hero-cta-btn');
     if (heroBtn) {
@@ -30,7 +29,8 @@ function scrollToServices() {
 }
 
 function showSection(sectionId) {
-    const views = ['home-view', 'login-section', 'register-section', 'pescadores-view', 'restaurantes-view', 'cart-view'];
+    // Añadida 'checkout-view' a la lista
+    const views = ['home-view', 'login-section', 'register-section', 'pescadores-view', 'restaurantes-view', 'cart-view', 'checkout-view'];
     views.forEach(id => {
         const el = document.getElementById(id);
         if(el) el.classList.add('hidden');
@@ -39,7 +39,6 @@ function showSection(sectionId) {
     document.getElementById(sectionId).classList.remove('hidden');
     window.scrollTo(0, 0);
 
-    // Renderizado bajo demanda
     if (sectionId === 'pescadores-view') renderPescadorInventory();
     if (sectionId === 'restaurantes-view') renderRestauranteMarket();
     if (sectionId === 'cart-view') renderCart();
@@ -53,7 +52,6 @@ const productForm = document.getElementById('product-form');
 if (productForm) {
     productForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        
         const editIndex = parseInt(document.getElementById('edit-index').value);
         const name = document.getElementById('p-name').value;
         const price = parseFloat(document.getElementById('p-price').value);
@@ -64,35 +62,25 @@ if (productForm) {
         const saveProduct = (imgSrc) => {
             const productData = {
                 id: editIndex >= 0 ? localProducts[editIndex].id : Date.now(),
-                name: name,
-                price: price,
-                stock: stock,
-                desc: desc,
+                name, price, stock, desc,
                 img: imgSrc || (editIndex >= 0 ? localProducts[editIndex].img : 'https://via.placeholder.com/400x300?text=Sin+Imagen'),
                 owner: localStorage.getItem('userFirstName') || 'Pescador Local'
             };
 
-            if (editIndex >= 0) {
-                localProducts[editIndex] = productData;
-                alert("✅ Producto actualizado con éxito");
-            } else {
-                localProducts.push(productData);
-                alert("✅ Producto publicado en el mercado");
-            }
+            if (editIndex >= 0) localProducts[editIndex] = productData;
+            else localProducts.push(productData);
 
             localStorage.setItem('morroProducts', JSON.stringify(localProducts));
             resetForm();
             renderPescadorInventory();
-            renderRestauranteMarket(); // Sincronización instantánea
+            renderRestauranteMarket();
         };
 
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => saveProduct(reader.result);
             reader.readAsDataURL(file);
-        } else {
-            saveProduct();
-        }
+        } else saveProduct();
     });
 }
 
@@ -122,11 +110,9 @@ function editProduct(index) {
     document.getElementById('p-stock').value = prod.stock;
     document.getElementById('p-desc').value = prod.desc;
     document.getElementById('edit-index').value = index;
-    
     document.getElementById('form-title').innerText = "📝 Editando Producto";
     document.getElementById('btn-publish').innerText = "Guardar Cambios";
     document.getElementById('btn-cancel-edit').classList.remove('hidden');
-    window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
 function resetForm() {
@@ -138,7 +124,7 @@ function resetForm() {
 }
 
 function deleteProduct(index) {
-    if (confirm("¿Estás seguro? Se eliminará también del mercado de restaurantes.")) {
+    if (confirm("¿Eliminar producto?")) {
         localProducts.splice(index, 1);
         localStorage.setItem('morroProducts', JSON.stringify(localProducts));
         renderPescadorInventory();
@@ -152,44 +138,32 @@ function deleteProduct(index) {
 function renderRestauranteMarket() {
     const grid = document.getElementById('restaurante-market-grid');
     if(!grid) return;
-    grid.innerHTML = '';
-    
-    if(localProducts.length === 0) {
-        grid.innerHTML = "<p>No hay productos disponibles por ahora.</p>";
-        return;
-    }
-
+    grid.innerHTML = localProducts.length === 0 ? "<p>No hay productos.</p>" : '';
     localProducts.forEach(prod => {
         grid.innerHTML += `
             <div class="product-card">
                 <img src="${prod.img}" class="product-img">
                 <span class="product-tag">Vendedor: ${prod.owner}</span>
                 <h3>${prod.name}</h3>
-                <p>${prod.desc}</p>
                 <div class="price">S/ ${prod.price.toFixed(2)} <span>x kg</span></div>
                 <div class="quantity-control">
-                    <label>Cant:</label>
                     <input type="number" id="qty-${prod.id}" value="1" min="1" max="${prod.stock}">
-                    <span>(Disp: ${prod.stock}kg)</span>
+                    <span>kg disponibles</span>
                 </div>
-                <button class="btn-submit" onclick="addToCart('${prod.name}', ${prod.price}, 'qty-${prod.id}', '${prod.img}')" style="margin-top:10px;">Añadir al Carrito</button>
+                <button class="btn-submit" onclick="addToCart('${prod.name}', ${prod.price}, 'qty-${prod.id}', '${prod.img}')">Añadir al Carrito</button>
             </div>`;
     });
 }
 
 function addToCart(name, price, inputId, img) {
-    const qtyInput = document.getElementById(inputId);
-    const qty = parseInt(qtyInput.value);
-    
+    const qty = parseInt(document.getElementById(inputId).value);
     if(qty <= 0) return;
-
     const index = cart.findIndex(item => item.name === name);
     if (index !== -1) cart[index].quantity += qty;
     else cart.push({ name, price, quantity: qty, image: img });
-    
     localStorage.setItem('morroCart', JSON.stringify(cart));
     updateCartBadge();
-    alert(`🛒 Agregado: ${qty}kg de ${name}`);
+    alert("🛒 Agregado al carrito");
 }
 
 function updateCartBadge() {
@@ -201,24 +175,16 @@ function renderCart() {
     const container = document.getElementById('cart-items');
     const totalEl = document.getElementById('cart-total');
     if(!container) return;
-    
-    container.innerHTML = cart.length === 0 ? '<p>Tu carrito está vacío.</p>' : '';
+    container.innerHTML = cart.length === 0 ? '<p>Vacío</p>' : '';
     let total = 0;
-
     cart.forEach((item, index) => {
         const subtotal = item.price * item.quantity;
         total += subtotal;
         container.innerHTML += `
             <div class="cart-item">
                 <img src="${item.image}" class="cart-img">
-                <div class="cart-item-details">
-                    <h4>${item.name}</h4>
-                    <p>${item.quantity}kg x S/ ${item.price.toFixed(2)}</p>
-                </div>
-                <div style="text-align:right">
-                    <p>S/ ${subtotal.toFixed(2)}</p>
-                    <button class="btn-remove" onclick="removeFromCart(${index})">Quitar</button>
-                </div>
+                <div class="cart-item-details"><h4>${item.name}</h4><p>${item.quantity}kg x S/ ${item.price}</p></div>
+                <button class="btn-remove" onclick="removeFromCart(${index})">Quitar</button>
             </div>`;
     });
     totalEl.innerText = `S/ ${total.toFixed(2)}`;
@@ -232,25 +198,31 @@ function removeFromCart(index) {
 }
 
 // =========================================
-// 5. AUTENTICACIÓN Y SESIÓN
+// 5. PASARELA DE PAGO (RESTABLECIDA)
+// =========================================
+function processPayment() {
+    if (cart.length === 0) {
+        alert("El carrito está vacío.");
+        return;
+    }
+    alert("💳 Procesando pago...");
+    setTimeout(() => {
+        alert("✅ ¡Pago exitoso! El pescador ha recibido tu pedido y el transporte está en camino.");
+        cart = [];
+        localStorage.removeItem('morroCart');
+        updateCartBadge();
+        showSection('home-view');
+    }, 1500);
+}
+
+// =========================================
+// 6. AUTENTICACIÓN Y SESIÓN
 // =========================================
 function checkAuth(viewId) {
     const role = localStorage.getItem('userRole');
-    if (!role) {
-        alert("🔒 Por favor, inicia sesión para acceder.");
-        showSection('login-section');
-        return;
-    }
-    
-    if (viewId === 'pescadores-view' && role !== 'pescador') {
-        alert("🚫 Acceso denegado. Solo para PESCADORES.");
-        return;
-    }
-    if (viewId === 'restaurantes-view' && role !== 'restaurante') {
-        alert("🚫 Acceso denegado. Solo para RESTAURANTES.");
-        return;
-    }
-
+    if (!role) { showSection('login-section'); return; }
+    if (viewId === 'pescadores-view' && role !== 'pescador') { alert("Acceso solo pescadores"); return; }
+    if (viewId === 'restaurantes-view' && role !== 'restaurante') { alert("Acceso solo restaurantes"); return; }
     showSection(viewId);
 }
 
@@ -258,22 +230,16 @@ document.getElementById('register-form').addEventListener('submit', (e) => {
     e.preventDefault();
     const role = document.getElementById('reg-role').value;
     const name = (role === 'pescador') ? document.getElementById('reg-name-pescador').value : document.getElementById('reg-name-restaurante').value;
-    
     localStorage.setItem('userFirstName', name);
     localStorage.setItem('userRole', role);
-    alert("¡Registro exitoso! Ya puedes iniciar sesión.");
+    alert("Registro exitoso");
     showSection('login-section');
 });
 
 document.getElementById('login-form').addEventListener('submit', (e) => {
     e.preventDefault();
     const name = localStorage.getItem('userFirstName');
-    if (name) {
-        updateNavbar(name);
-        showSection('home-view');
-    } else {
-        alert("Usuario no encontrado. Por favor regístrate.");
-    }
+    if (name) { updateNavbar(name); showSection('home-view'); }
 });
 
 function updateNavbar(name) {
@@ -285,15 +251,12 @@ function updateNavbar(name) {
             <button class="btn-logout" onclick="logout()">Salir</button>
         </div>
     `;
-    toggleHeroButton(true); // Oculta el botón "Comenzar"
+    toggleHeroButton(true);
     updateCartBadge();
 }
 
 function logout() {
-    localStorage.removeItem('userFirstName');
-    localStorage.removeItem('userRole');
-    localStorage.removeItem('morroCart'); 
-    toggleHeroButton(false); // Muestra el botón "Comenzar"
+    localStorage.clear();
     location.reload();
 }
 
@@ -303,12 +266,8 @@ function toggleRegFields() {
     document.getElementById('fields-restaurante').classList.toggle('hidden', role !== 'restaurante');
 }
 
-// Inicialización al cargar la página
 window.addEventListener('load', () => {
     const name = localStorage.getItem('userFirstName');
-    if (name) {
-        updateNavbar(name);
-    } else {
-        toggleHeroButton(false);
-    }
+    if (name) updateNavbar(name);
+    else toggleHeroButton(false);
 });

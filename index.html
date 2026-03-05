@@ -10,11 +10,7 @@
   <body>
     <nav class="navbar">
       <div class="logo" onclick="showSection('home-view'); closeMenu();">
-        <img
-          src="/img/Icono-MORRO-SUR.png"
-          alt="Logo Morro Sur"
-          class="logo-img"
-        />
+        <img src="/img/Icono-MORRO-SUR.png" alt="Logo Morro Sur" class="logo-img" />
         <span>Morro Sur</span>
       </div>
 
@@ -25,21 +21,10 @@
       </div>
 
       <ul class="nav-links" id="nav-links">
-        <li>
-          <a href="#" onclick="showSection('home-view'); closeMenu();"
-            >Inicio</a
-          >
-        </li>
-        <li>
-          <a href="#" onclick="scrollToServices(); closeMenu();">Servicios</a>
-        </li>
+        <li><a href="#" onclick="showSection('home-view'); closeMenu();">Inicio</a></li>
+        <li><a href="#" onclick="scrollToServices(); closeMenu();">Servicios</a></li>
         <li id="auth-status">
-          <button
-            class="btn-login"
-            onclick="showSection('login-section'); closeMenu();"
-          >
-            Iniciar Sesión
-          </button>
+          <button class="btn-login" onclick="showSection('login-section'); closeMenu();">Iniciar Sesión</button>
         </li>
       </ul>
     </nav>
@@ -49,46 +34,24 @@
         <header class="hero">
           <div class="hero-content">
             <span class="badge">La red logística del mar</span>
-            <h1>
-              Del mar a la mesa, <br />
-              <span>sin intermediarios.</span>
-            </h1>
-            <p>
-              Morro Sur conecta directamente a los pescadores locales con los
-              mejores restaurantes.
-            </p>
-            <button
-              id="hero-cta-btn"
-              class="btn-primary"
-              onclick="showSection('register-section')"
-            >
-              Comenzar Ahora →
-            </button>
+            <h1>Del mar a la mesa, <br /><span>sin intermediarios.</span></h1>
+            <p>Morro Sur conecta directamente a los pescadores locales con los mejores restaurantes.</p>
+            <button id="hero-cta-btn" class="btn-primary" onclick="showSection('register-section')">Comenzar Ahora →</button>
           </div>
         </header>
 
         <section id="features-section" class="features">
           <h2 class="section-title">Nuestros Servicios</h2>
           <div class="container">
-            <div
-              class="card cursor-pointer"
-              onclick="checkAuth('pescadores-view')"
-            >
+            <div class="card cursor-pointer" onclick="checkAuth('pescadores-view')">
               <div class="icon-box">⛵</div>
               <h3>Para Pescadores</h3>
-              <p>
-                Sube tus capturas, gestiona tu inventario y vende directamente.
-              </p>
+              <p>Sube tus capturas, gestiona tu inventario y vende directamente.</p>
             </div>
-            <div
-              class="card cursor-pointer"
-              onclick="checkAuth('restaurantes-view')"
-            >
+            <div class="card cursor-pointer" onclick="checkAuth('restaurantes-view')">
               <div class="icon-box">🏪</div>
               <h3>Para Restaurantes</h3>
-              <p>
-                Compra pescado fresco en tiempo real directamente de la fuente.
-              </p>
+              <p>Compra pescado fresco en tiempo real directamente de la fuente.</p>
             </div>
           </div>
         </section>
@@ -97,26 +60,12 @@
       <section id="pescadores-view" class="catalog-section hidden">
         <div class="container">
           <h2 class="section-title">Panel de Control: Mis Capturas</h2>
-          <div
-            class="form-card"
-            style="
-              max-width: 600px;
-              margin: 0 auto 40px auto;
-              background: #f8fafc;
-              text-align: left;
-            "
-          >
+          <div class="form-card" style="max-width: 600px; margin: 0 auto 40px auto; background: #f8fafc; text-align: left;">
             <h3 id="form-title">🚢 Registrar Nueva Captura</h3>
             <form id="product-form" style="margin-top: 15px">
               <input type="hidden" id="edit-index" value="-1" />
               <label class="checkout-label">Especie / Producto</label>
-              <input
-                type="text"
-                id="p-name"
-                placeholder="Ej. Bonito, Merluza"
-                required
-              />
-
+              <input type="text" id="p-name" placeholder="Ej. Bonito, Merluza" required />
               <div style="display: flex; gap: 10px">
                 <div style="flex: 1">
                   <label class="checkout-label">Precio (S/ kg)</label>
@@ -127,48 +76,12 @@
                   <input type="number" id="p-stock" required />
                 </div>
               </div>
-
               <label class="checkout-label">Foto de la Captura</label>
               <input type="file" id="p-image" accept="image/*" />
-
               <label class="checkout-label">Descripción</label>
-              <textarea
-                id="p-desc"
-                rows="2"
-                style="
-                  width: 100%;
-                  padding: 10px;
-                  border-radius: 10px;
-                  border: 1px solid #e2e8f0;
-                "
-              ></textarea>
-
-              <button
-                type="submit"
-                id="btn-publish"
-                class="btn-submit"
-                style="margin-top: 15px"
-              >
-                Publicar Producto
-              </button>
-              <button
-                type="button"
-                id="btn-cancel-edit"
-                class="hidden"
-                onclick="resetForm()"
-                style="
-                  background: #64748b;
-                  margin-top: 5px;
-                  width: 100%;
-                  padding: 10px;
-                  border-radius: 10px;
-                  color: white;
-                  border: none;
-                  cursor: pointer;
-                "
-              >
-                Cancelar Edición
-              </button>
+              <textarea id="p-desc" rows="2" style="width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #e2e8f0;"></textarea>
+              <button type="submit" id="btn-publish" class="btn-submit" style="margin-top: 15px">Publicar Producto</button>
+              <button type="button" id="btn-cancel-edit" class="hidden" onclick="resetForm()" style="background: #64748b; margin-top: 5px; width: 100%; padding: 10px; border-radius: 10px; color: white; border: none; cursor: pointer;">Cancelar Edición</button>
             </form>
           </div>
           <h3>Mi Inventario Actual</h3>
@@ -187,10 +100,42 @@
           <div id="cart-items"></div>
           <div class="cart-summary">
             <h3>Total: <span id="cart-total">S/ 0.00</span></h3>
-            <button class="btn-primary" onclick="showSection('checkout-view')">
-              Proceder al Pago
-            </button>
+            <button class="btn-primary" onclick="showSection('checkout-view')">Proceder al Pago</button>
           </div>
+        </div>
+      </section>
+
+      <section id="checkout-view" class="catalog-section hidden">
+        <h2 class="section-title">Finalizar Compra</h2>
+        <div class="form-card" style="max-width: 500px; margin: 0 auto; text-align: left;">
+            <form id="checkout-form">
+                <label class="checkout-label">Nombre en la Tarjeta</label>
+                <input type="text" placeholder="Ej. Juan Pérez" required>
+                
+                <label class="checkout-label">Número de Tarjeta</label>
+                <input type="text" placeholder="0000 0000 0000 0000" maxlength="16" required>
+                
+                <div style="display:flex; gap:10px;">
+                    <div style="flex:1">
+                        <label class="checkout-label">Vencimiento</label>
+                        <input type="text" placeholder="MM/AA" maxlength="5" required>
+                    </div>
+                    <div style="flex:1">
+                        <label class="checkout-label">CVV</label>
+                        <input type="password" placeholder="123" maxlength="3" required>
+                    </div>
+                </div>
+                
+                <label class="checkout-label">Dirección de Entrega (Restaurante)</label>
+                <input type="text" placeholder="Av. Los Pescadores 123, Chorrillos" required>
+                
+                <button type="button" class="btn-submit" onclick="processPayment()" style="background: #10b981; margin-top: 10px;">
+                    Confirmar Pago y Pedido
+                </button>
+                <button type="button" class="btn-logout" onclick="showSection('cart-view')" style="width:100%; margin-top:10px;">
+                    Volver al Carrito
+                </button>
+            </form>
         </div>
       </section>
 
@@ -198,24 +143,11 @@
         <div class="form-card">
           <h2>Iniciar Sesión</h2>
           <form id="login-form">
-            <input
-              type="email"
-              id="login-email"
-              placeholder="Correo"
-              required
-            />
-            <input
-              type="password"
-              id="login-pass"
-              placeholder="Contraseña"
-              required
-            />
+            <input type="email" id="login-email" placeholder="Correo" required />
+            <input type="password" id="login-pass" placeholder="Contraseña" required />
             <button type="submit" class="btn-submit">Entrar</button>
           </form>
-          <p>
-            ¿No tienes cuenta?
-            <a href="#" onclick="showSection('register-section')">Regístrate</a>
-          </p>
+          <p>¿No tienes cuenta? <a href="#" onclick="showSection('register-section')">Regístrate</a></p>
         </div>
       </section>
 
@@ -229,26 +161,9 @@
               <option value="restaurante">Soy Restaurante</option>
             </select>
             <input type="email" id="reg-email" placeholder="Correo" required />
-            <input
-              type="password"
-              id="reg-pass"
-              placeholder="Contraseña"
-              required
-            />
-            <div id="fields-pescador" class="hidden">
-              <input
-                type="text"
-                id="reg-name-pescador"
-                placeholder="Nombre Completo"
-              />
-            </div>
-            <div id="fields-restaurante" class="hidden">
-              <input
-                type="text"
-                id="reg-name-restaurante"
-                placeholder="Nombre del Restaurante"
-              />
-            </div>
+            <input type="password" id="reg-pass" placeholder="Contraseña" required />
+            <div id="fields-pescador" class="hidden"><input type="text" id="reg-name-pescador" placeholder="Nombre Completo" /></div>
+            <div id="fields-restaurante" class="hidden"><input type="text" id="reg-name-restaurante" placeholder="Nombre del Restaurante" /></div>
             <button type="submit" class="btn-submit">Registrarse</button>
           </form>
         </div>
@@ -256,9 +171,7 @@
     </main>
 
     <footer class="footer">
-      <div class="footer-content">
-        <span>© 2026 Morro Sur Logística.</span>
-      </div>
+      <div class="footer-content"><span>© 2026 Morro Sur Logística.</span></div>
     </footer>
   </body>
 </html>
